@@ -49,6 +49,11 @@ static bool isInt(const std::string &str)
 	return (true);
 }
 
+static bool isFloat(const std::string &str)
+{
+	
+}
+
 void ScalarConverter::convert(const std::string &literal)
 {
 	if (isPseudoLiteral(literal))
