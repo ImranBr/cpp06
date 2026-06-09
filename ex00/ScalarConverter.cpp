@@ -22,6 +22,33 @@ static bool isPseudoLiteral(const std::string &str)
 	return (false);
 }
 
+static bool isChar(const std::string &str)
+{
+	if (str.length() == 1)
+	{
+		if (!std::isdigit(str[0]))
+		return (true);
+	}
+	return (false);
+}
+
+static bool isInt(const std::string &str)
+{
+	size_t i = 0;
+
+	if (str.empty())
+		return (false);
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (i < str.length())
+	{
+		if (!std::isdigit(str[i]))
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
 void ScalarConverter::convert(const std::string &literal)
 {
 	if (isPseudoLiteral(literal))
@@ -29,7 +56,19 @@ void ScalarConverter::convert(const std::string &literal)
 		std::cout << "Pseudo literal detected" << std::endl;
 		return;	
 	}
-	std::cout << "Not a pseudo literal : " << literal << std::endl;
+	// std::cout << "Not a pseudo literal : " << literal << std::endl;
+	else if (isChar(literal))
+	{
+		std::cout << "Char detected" << std::endl;
+		return;
+	}
+	// std::cout << "Not a char: " << literal << std::endl;
+	else if (isInt(literal))
+	{
+		std::cout << "Int detected" << std::endl;
+		return;
+	}
+	// std::cout << "Not an int: " << literal << std::endl;
 }
 
 // {
