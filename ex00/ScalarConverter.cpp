@@ -81,11 +81,8 @@ bool isDouble(const std::string &str)
 static void convertFromInt(int value)
 {
 	// CHAR
-	if (value < std::numeric_limits<char>::min()
-		|| value > std::numeric_limits<char>::max())
-	{
+	if (value < std::numeric_limits<char>::min() || value > std::numeric_limits<char>::max())
 		std::cout << "char: impossible" << std::endl;
-	}
 	else
 	{
 		char c = static_cast<char>(value);
@@ -147,3 +144,8 @@ void ScalarConverter::convert(const std::string &literal)
 	}
 	// std::cout << "Not a Double: " << literal << std::endl;
 }
+
+	// int minc = std::numeric_limits<char>::min();
+    // int maxc = std::numeric_limits<char>::max();
+    // std::cout << minc << std::endl;
+    // std::cout << maxc << std::endl;
