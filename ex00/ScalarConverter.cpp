@@ -35,6 +35,8 @@ static bool isChar(const std::string &str)
 static bool isInt(const std::string &str)
 {
 	size_t i = 0;
+	char *end;
+	long value;
 
 	if (str.empty())
 		return (false);
@@ -48,6 +50,11 @@ static bool isInt(const std::string &str)
 			return (false);
 		i++;
 	}
+	value = std::strtol(str.c_str(), &end, 10);
+	if (*end != '\0')
+		return (false);
+	if (value < std::numeric_limits<int>::min() || value > std::numeric_limits<int>::max())
+		return (false);
 	return (true);
 }
 
@@ -91,16 +98,13 @@ static void convertFromInt(int value)
 		else
 			std::cout << "char: Non displayable" << std::endl;
 	}
-
 	// INT
 	std::cout << "int: " << value << std::endl;
-
 	// FLOAT
 	float f = static_cast<float>(value);
 	std::cout << "float: "
 			  << std::fixed << std::setprecision(1)
 			  << f << "f" << std::endl;
-
 	// DOUBLE
 	double d = static_cast<double>(value);
 	std::cout << "double: "
@@ -112,17 +116,14 @@ static void convertFromChar(char value)
 {
 	// CHAR
 	std::cout << "char: '" << value << "'" << std::endl;
-
 	// INT
 	int i = static_cast<int>(value);
 	std::cout << "int: " << i << std::endl;
-
 	// FLOAT
 	float f = static_cast<float>(value);
 	std::cout << "float: "
 			  << std::fixed << std::setprecision(1)
 			  << f << "f" << std::endl;
-
 	// DOUBLE
 	double d = static_cast<double>(value);
 	std::cout << "double: "
@@ -149,7 +150,6 @@ static void convertFromFloat(float value)
 		else
 			std::cout << "char: Non displayable" << std::endl;
 	}
-
 	// INT
 	if (std::isnan(value)
 		|| std::isinf(value)
@@ -163,15 +163,12 @@ static void convertFromFloat(float value)
 		int i = static_cast<int>(value);
 		std::cout << "int: " << i << std::endl;
 	}
-
 	// FLOAT
 	std::cout << "float: "
 			  << std::fixed << std::setprecision(1)
 			  << value << "f" << std::endl;
-
 	// DOUBLE
 	double d = static_cast<double>(value);
-
 	std::cout << "double: "
 			  << std::fixed << std::setprecision(1)
 			  << d << std::endl;
@@ -196,7 +193,6 @@ static void convertFromDouble(double value)
 		else
 			std::cout << "char: Non displayable" << std::endl;
 	}
-
 	// INT
 	if (std::isnan(value)
 		|| std::isinf(value)
@@ -210,51 +206,72 @@ static void convertFromDouble(double value)
 		int i = static_cast<int>(value);
 		std::cout << "int: " << i << std::endl;
 	}
-
 	// FLOAT
 	float f = static_cast<float>(value);
-
 	std::cout << "float: "
 			  << std::fixed << std::setprecision(1)
 			  << f << "f" << std::endl;
-
 	// DOUBLE
 	std::cout << "double: "
 			  << std::fixed << std::setprecision(1)
 			  << value << std::endl;
 }
 
+static void convertPseudoLiteral(const std::string &literal)
+{
+	//CHAR & INT
+	std::cout << "char: impossible" << std::endl;
+	std::cout << "int: impossible" << std::endl;
+
+	if (literal == "nan")
+	{
+		std::cout << "float: nanf" << std::endl;
+		std::cout << "double: nan" << std::endl;
+	}
+	else if (literal == "nanf")
+	{
+		std::cout << "float: nanf" << std::endl;
+		std::cout << "double: nan" << std::endl;
+	}
+	else if (literal == "+inf" || literal == "+inff")
+	{
+		std::cout << "float: +inff" << std::endl;
+		std::cout << "double: +inf" << std::endl;
+	}
+	else if (literal == "-inf" || literal == "-inff")
+	{
+		std::cout << "float: -inff" << std::endl;
+		std::cout << "double: -inf" << std::endl;
+	}
+}
+
 void ScalarConverter::convert(const std::string &literal)
 {
 	if (isPseudoLiteral(literal))
 	{
-		std::cout << "Pseudo literal detected" << std::endl;
+		convertPseudoLiteral(literal);
 		return;	
 	}
 	else if (isChar(literal))
 	{
-		std::cout << "Char detected" << std::endl;
 		char value = literal[0];
 		convertFromChar(value);
 		return;
 	}
 	else if (isInt(literal))
 	{
-		std::cout << "Int detected" << std::endl;
 		int value = std::atoi(literal.c_str());
 		convertFromInt(value);
 		return;
 	}
-	if (isFloat(literal))
+	else if (isFloat(literal))
 	{
-		std::cout << "Float detected" << std::endl;
 		float value = static_cast<float>(std::strtod(literal.c_str(), NULL));
 		convertFromFloat(value);
 		return;	
 	}
-	if (isDouble(literal))
+	else if (isDouble(literal))
 	{
-		std::cout << "Double detected" << std::endl;
 		double value = std::strtod(literal.c_str(), NULL);
 		convertFromDouble(value);
 		return;	
