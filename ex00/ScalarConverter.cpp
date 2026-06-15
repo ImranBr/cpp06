@@ -75,7 +75,6 @@ bool isDouble(const std::string &str)
 	if (str.find('.') == std::string::npos)
 		return (false);
 	return (true);
-
 }
 
 static void convertFromInt(int value)
@@ -109,6 +108,122 @@ static void convertFromInt(int value)
 			  << d << std::endl;
 }
 
+static void convertFromChar(char value)
+{
+	// CHAR
+	std::cout << "char: '" << value << "'" << std::endl;
+
+	// INT
+	int i = static_cast<int>(value);
+	std::cout << "int: " << i << std::endl;
+
+	// FLOAT
+	float f = static_cast<float>(value);
+	std::cout << "float: "
+			  << std::fixed << std::setprecision(1)
+			  << f << "f" << std::endl;
+
+	// DOUBLE
+	double d = static_cast<double>(value);
+	std::cout << "double: "
+			  << std::fixed << std::setprecision(1)
+			  << d << std::endl;
+}
+
+static void convertFromFloat(float value)
+{
+	// CHAR
+	if (std::isnan(value)
+		|| std::isinf(value)
+		|| value < std::numeric_limits<char>::min()
+		|| value > std::numeric_limits<char>::max())
+	{
+		std::cout << "char: impossible" << std::endl;
+	}
+	else
+	{
+		char c = static_cast<char>(value);
+
+		if (std::isprint(c))
+			std::cout << "char: '" << c << "'" << std::endl;
+		else
+			std::cout << "char: Non displayable" << std::endl;
+	}
+
+	// INT
+	if (std::isnan(value)
+		|| std::isinf(value)
+		|| value < std::numeric_limits<int>::min()
+		|| value > std::numeric_limits<int>::max())
+	{
+		std::cout << "int: impossible" << std::endl;
+	}
+	else
+	{
+		int i = static_cast<int>(value);
+		std::cout << "int: " << i << std::endl;
+	}
+
+	// FLOAT
+	std::cout << "float: "
+			  << std::fixed << std::setprecision(1)
+			  << value << "f" << std::endl;
+
+	// DOUBLE
+	double d = static_cast<double>(value);
+
+	std::cout << "double: "
+			  << std::fixed << std::setprecision(1)
+			  << d << std::endl;
+}
+
+static void convertFromDouble(double value)
+{
+	// CHAR
+	if (std::isnan(value)
+		|| std::isinf(value)
+		|| value < std::numeric_limits<char>::min()
+		|| value > std::numeric_limits<char>::max())
+	{
+		std::cout << "char: impossible" << std::endl;
+	}
+	else
+	{
+		char c = static_cast<char>(value);
+
+		if (std::isprint(c))
+			std::cout << "char: '" << c << "'" << std::endl;
+		else
+			std::cout << "char: Non displayable" << std::endl;
+	}
+
+	// INT
+	if (std::isnan(value)
+		|| std::isinf(value)
+		|| value < std::numeric_limits<int>::min()
+		|| value > std::numeric_limits<int>::max())
+	{
+		std::cout << "int: impossible" << std::endl;
+	}
+	else
+	{
+		int i = static_cast<int>(value);
+		std::cout << "int: " << i << std::endl;
+	}
+
+	// FLOAT
+	float f = static_cast<float>(value);
+
+	std::cout << "float: "
+			  << std::fixed << std::setprecision(1)
+			  << f << "f" << std::endl;
+
+	// DOUBLE
+	std::cout << "double: "
+			  << std::fixed << std::setprecision(1)
+			  << value << std::endl;
+}
+
 void ScalarConverter::convert(const std::string &literal)
 {
 	if (isPseudoLiteral(literal))
@@ -116,13 +231,13 @@ void ScalarConverter::convert(const std::string &literal)
 		std::cout << "Pseudo literal detected" << std::endl;
 		return;	
 	}
-	// std::cout << "Not a pseudo literal : " << literal << std::endl;
 	else if (isChar(literal))
 	{
 		std::cout << "Char detected" << std::endl;
+		char value = literal[0];
+		convertFromChar(value);
 		return;
 	}
-	// std::cout << "Not a char: " << literal << std::endl;
 	else if (isInt(literal))
 	{
 		std::cout << "Int detected" << std::endl;
@@ -130,19 +245,21 @@ void ScalarConverter::convert(const std::string &literal)
 		convertFromInt(value);
 		return;
 	}
-	// std::cout << "Not an int: " << literal << std::endl;
 	if (isFloat(literal))
 	{
 		std::cout << "Float detected" << std::endl;
+		float value = static_cast<float>(std::strtod(literal.c_str(), NULL));
+		convertFromFloat(value);
 		return;	
 	}
-	// std::cout << "Not a Float: " << literal << std::endl;
 	if (isDouble(literal))
 	{
 		std::cout << "Double detected" << std::endl;
+		double value = std::strtod(literal.c_str(), NULL);
+		convertFromDouble(value);
 		return;	
 	}
-	// std::cout << "Not a Double: " << literal << std::endl;
+	std::cout << "Invalid literal" << std::endl;
 }
 
 	// int minc = std::numeric_limits<char>::min();
