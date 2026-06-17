@@ -7,9 +7,9 @@
 
 struct Data
 {
-    int value;
+    int age;
     std::string name;
-
+    double score;
 };
 
 #endif
