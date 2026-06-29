@@ -61,8 +61,8 @@ static bool isInt(const std::string &str)
 static bool isFloat(const std::string &str)
 {
 	char *end;
-	std::strtod(str.c_str(), &end);
 	
+	std::strtod(str.c_str(), &end);
 	if (str == "nanf"|| str == "+inff" || str == "-inff")
 		return (true);
 	if (*end == 'f' && *(end + 1) == '\0')
@@ -176,14 +176,12 @@ static void convertFromFloat(float value)
 
 static void convertFromDouble(double value)
 {
-	// CHAR
+	//CHAR
 	if (std::isnan(value)
 		|| std::isinf(value)
 		|| value < std::numeric_limits<char>::min()
 		|| value > std::numeric_limits<char>::max())
-	{
 		std::cout << "char: impossible" << std::endl;
-	}
 	else
 	{
 		char c = static_cast<char>(value);
@@ -198,20 +196,16 @@ static void convertFromDouble(double value)
 		|| std::isinf(value)
 		|| value < std::numeric_limits<int>::min()
 		|| value > std::numeric_limits<int>::max())
-	{
 		std::cout << "int: impossible" << std::endl;
-	}
 	else
 	{
 		int i = static_cast<int>(value);
 		std::cout << "int: " << i << std::endl;
 	}
-	// FLOAT
 	float f = static_cast<float>(value);
 	std::cout << "float: "
 			  << std::fixed << std::setprecision(1)
 			  << f << "f" << std::endl;
-	// DOUBLE
 	std::cout << "double: "
 			  << std::fixed << std::setprecision(1)
 			  << value << std::endl;
@@ -219,7 +213,6 @@ static void convertFromDouble(double value)
 
 static void convertPseudoLiteral(const std::string &literal)
 {
-	//CHAR & INT
 	std::cout << "char: impossible" << std::endl;
 	std::cout << "int: impossible" << std::endl;
 
