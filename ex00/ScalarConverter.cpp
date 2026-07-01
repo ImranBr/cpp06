@@ -13,7 +13,7 @@ ScalarConverter &ScalarConverter::operator=(const ScalarConverter &other)
 	return *this;
 }
 
-ScalarConverter::~ScalarConverter() {}
+ScalarConverter::~ScalarConverter() {} 
 
 static bool isPseudoLiteral(const std::string &str)
 {

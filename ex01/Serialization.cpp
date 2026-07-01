@@ -14,7 +14,7 @@ Serializer &Serializer::operator=(const Serializer &other)
 	return *this;
 }
 
-Serializer::~Serializer() {}
+Serializer::~Serializer() {} 
 
 uintptr_t Serializer::serialize(Data *ptr)
 {
